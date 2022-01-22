@@ -2,7 +2,15 @@ const Question = require('../models/Question')
 
 const getAllQuestions = async (req, res) => {
   try {
-    const questions = await Question.find({})
+    const questions = await Question.find(
+      {},
+      {
+        _id: true,
+        question: true,
+        answer: true,
+        tech: true,
+      },
+    )
     const response = {
       success: true,
       total: questions.length,
@@ -28,7 +36,15 @@ const getQuestion = async (req, res) => {
       })
     }
 
-    const question = await Question.findOne({ _id: id })
+    const question = await Question.findOne(
+      { _id: id },
+      {
+        _id: true,
+        question: true,
+        answer: true,
+        tech: true,
+      },
+    )
     if (!question) {
       res.status(404)
       return res.json({
@@ -52,7 +68,15 @@ const getQuestion = async (req, res) => {
 const getQuestionsByQuery = async (req, res) => {
   try {
     const { tech } = req.query
-    const questions = await Question.find({ tech: tech })
+    const questions = await Question.find(
+      { tech: tech },
+      {
+        _id: true,
+        question: true,
+        answer: true,
+        tech: true,
+      },
+    )
     const response = {
       success: true,
       total: questions.length,
